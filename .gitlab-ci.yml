@@ -8,8 +8,8 @@ Lint:
   tags:
     - bfs
   script: 
-    - cpplint --verbose=0 include/uleb128/uleb128.h
-    - cpplint --verbose=0 src/uleb128/uleb128.cc
+    - cpplint --verbose=0 include/leb128/leb128.h
+    - cpplint --verbose=0 src/leb128/leb128.cc
 
 Compile:
   stage: build
@@ -22,11 +22,11 @@ Compile:
     - make
   artifacts:
     paths:
-      - build/uleb128_test
+      - build/leb128_test
 
-Test Uleb128:
+Test Leb128:
   stage: test
   tags:
     - bfs
   script:
-    - ./build/uleb128_test
+    - ./build/leb128_test
