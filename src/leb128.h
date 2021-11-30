@@ -23,17 +23,19 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef INCLUDE_LEB128_LEB128_H_
-#define INCLUDE_LEB128_LEB128_H_
+#ifndef SRC_LEB128_H_
+#define SRC_LEB128_H_
 
-#include <span>
+#include <cstddef>
 #include <cstdint>
 
 namespace bfs {
 
-std::size_t EncodeLeb128(int64_t val, std::span<uint8_t> data);
-std::size_t DecodeLeb128(std::span<uint8_t> data, int64_t * const val);
+std::size_t EncodeLeb128(int64_t val, uint8_t * const data,
+                         const std::size_t len);
+std::size_t DecodeLeb128(uint8_t const * const data, const std::size_t len,
+                         int64_t * const val);
 
 }  // namespace bfs
 
-#endif  // INCLUDE_LEB128_LEB128_H_
+#endif  // SRC_LEB128_H_

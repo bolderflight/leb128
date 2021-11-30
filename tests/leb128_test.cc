@@ -23,7 +23,7 @@
 * IN THE SOFTWARE.
 */
 
-#include "leb128/leb128.h"
+#include "leb128.h"
 #include "gtest/gtest.h"
 
 /* Test minimum input */
@@ -31,8 +31,8 @@ TEST(Leb128, MinInput) {
   uint8_t buf[10];
   int64_t input = std::numeric_limits<int64_t>::min();
   int64_t output = 0;
-  std::size_t bytes_written = bfs::EncodeLeb128(input, buf);
-  std::size_t bytes_read = bfs::DecodeLeb128(buf, &output);
+  std::size_t bytes_written = bfs::EncodeLeb128(input, buf, sizeof(buf));
+  std::size_t bytes_read = bfs::DecodeLeb128(buf, sizeof(buf), &output);
   EXPECT_EQ(10, bytes_written);
   EXPECT_EQ(10, bytes_read);
   EXPECT_EQ(std::numeric_limits<int64_t>::min(), output);
@@ -42,8 +42,8 @@ TEST(Leb128, MaxInput) {
   uint8_t buf[10];
   int64_t input = std::numeric_limits<int64_t>::max();
   int64_t output = 0;
-  std::size_t bytes_written = bfs::EncodeLeb128(input, buf);
-  std::size_t bytes_read = bfs::DecodeLeb128(buf, &output);
+  std::size_t bytes_written = bfs::EncodeLeb128(input, buf, sizeof(buf));
+  std::size_t bytes_read = bfs::DecodeLeb128(buf, sizeof(buf), &output);
   EXPECT_EQ(10, bytes_written);
   EXPECT_EQ(10, bytes_read);
   EXPECT_EQ(std::numeric_limits<int64_t>::max(), output);
@@ -53,8 +53,8 @@ TEST(Leb128, MidInput) {
   uint8_t buf[10];
   int64_t input = -12345;
   int64_t output = 0;
-  std::size_t bytes_written = bfs::EncodeLeb128(input, buf);
-  std::size_t bytes_read = bfs::DecodeLeb128(buf, &output);
+  std::size_t bytes_written = bfs::EncodeLeb128(input, buf, sizeof(buf));
+  std::size_t bytes_read = bfs::DecodeLeb128(buf, sizeof(buf), &output);
   EXPECT_EQ(3, bytes_written);
   EXPECT_EQ(3, bytes_read);
   EXPECT_EQ(-12345, output);
@@ -63,7 +63,7 @@ TEST(Leb128, MidInput) {
 TEST(Leb128, WriteBuffer) {
   uint8_t buf[1];
   int64_t input = 12345;
-  std::size_t bytes_written = bfs::EncodeLeb128(input, buf);
+  std::size_t bytes_written = bfs::EncodeLeb128(input, buf, sizeof(buf));
   EXPECT_EQ(0, bytes_written);
 }
 /* Test small read buffer */
@@ -71,8 +71,8 @@ TEST(Leb128, ReadBuffer) {
   uint8_t buf[10];
   int64_t input = 12345;
   int64_t output = 0;
-  std::size_t bytes_written = bfs::EncodeLeb128(input, buf);
-  std::size_t bytes_read = bfs::DecodeLeb128({buf, 1}, &output);
+  std::size_t bytes_written = bfs::EncodeLeb128(input, buf, sizeof(buf));
+  std::size_t bytes_read = bfs::DecodeLeb128(buf, 1, &output);
   EXPECT_EQ(0, bytes_read);
 }
 /* Test null pointer */
@@ -80,7 +80,7 @@ TEST(Leb128, NullPointer) {
   uint8_t buf[10];
   int64_t input = 12345;
   int64_t output = 0;
-  std::size_t bytes_written = bfs::EncodeLeb128(input, buf);
-  std::size_t bytes_read = bfs::DecodeLeb128({buf, 1}, NULL);
+  std::size_t bytes_written = bfs::EncodeLeb128(input, buf, sizeof(buf));
+  std::size_t bytes_read = bfs::DecodeLeb128(buf, 1, NULL);
   EXPECT_EQ(0, bytes_read);
 }

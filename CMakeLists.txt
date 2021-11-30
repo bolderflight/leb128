@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 # Project information
 project(Leb128
-  VERSION 1.0.0
+  VERSION 2.0.0
   DESCRIPTION "Little endian base 128 variable-length encoding."
   LANGUAGES CXX
 )
@@ -11,19 +11,19 @@ add_compile_options(
 )
 # Add the library target
 add_library(leb128
-	include/leb128/leb128.h
-	src/leb128/leb128.cc
+	src/leb128.h
+	src/leb128.cpp
 )
 # Setup include directories 
 target_include_directories(leb128 PUBLIC 
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 	$<INSTALL_INTERFACE:include>
 )
 
 # Example and unit testing if this project is built separately
 if (PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME)
 	# Add the example target
-	add_executable(leb128_example examples/leb128_example.cc)
+	add_executable(leb128_example examples/cmake/leb128_example.cc)
 	# Add the includes
 	target_include_directories(leb128_example PUBLIC 
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
