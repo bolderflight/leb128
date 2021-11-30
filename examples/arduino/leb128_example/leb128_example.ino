@@ -23,28 +23,44 @@
 * IN THE SOFTWARE.
 */
 
-#include "leb128/leb128.h"
-#include <iostream>
+#include "leb128.h"
+#include <limits>
 
-int main() {
+void setup() {
+  Serial.begin(115200);
+  while (!Serial) {}
   uint8_t buf[100];
   int64_t read_val = 0;
   /* Try encoding and decoding the maximum int64 value */
   int64_t orig_val = std::numeric_limits<int64_t>::max();
-  std::cout << "Written value: " << orig_val << std::endl;
-  std::cout << "Bytes written: " << bfs::EncodeLeb128(orig_val, buf) << std::endl;
-  std::cout << "Bytes read: " << bfs::DecodeLeb128(buf, &read_val) << std::endl;
-  std::cout << "Read value: " << read_val << std::endl;
+  Serial.print("Written value: ");
+  Serial.println(orig_val);
+  Serial.print("Bytes written: ");
+  Serial.println(bfs::EncodeLeb128(orig_val, buf, sizeof(buf)));
+  Serial.print("Bytes read: ");
+  Serial.println(bfs::DecodeLeb128(buf, sizeof(buf), &read_val));
+  Serial.print("Read value: ");
+  Serial.println(read_val);
   /* Try encoding and decoding the minimum int64 value */
   orig_val = std::numeric_limits<int64_t>::min();
-  std::cout << "Written value: " << orig_val << std::endl;
-  std::cout << "Bytes written: " << bfs::EncodeLeb128(orig_val, buf) << std::endl;
-  std::cout << "Bytes read: " << bfs::DecodeLeb128(buf, &read_val) << std::endl;
-  std::cout << "Read value: " << read_val << std::endl;
+  Serial.print("Written value: ");
+  Serial.println(orig_val);
+  Serial.print("Bytes written: ");
+  Serial.println(bfs::EncodeLeb128(orig_val, buf, sizeof(buf)));
+  Serial.print("Bytes read: ");
+  Serial.println(bfs::DecodeLeb128(buf, sizeof(buf), &read_val));
+  Serial.print("Read value: ");
+  Serial.println(read_val);
   /* Try encoding and decoding some random value */
   orig_val = -12345;
-  std::cout << "Written value: " << orig_val << std::endl;
-  std::cout << "Bytes written: " << bfs::EncodeLeb128(orig_val, buf) << std::endl;
-  std::cout << "Bytes read: " << bfs::DecodeLeb128(buf, &read_val) << std::endl;
-  std::cout << "Read value: " << read_val << std::endl;
+  Serial.print("Written value: ");
+  Serial.println(orig_val);
+  Serial.print("Bytes written: ");
+  Serial.println(bfs::EncodeLeb128(orig_val, buf, sizeof(buf)));
+  Serial.print("Bytes read: ");
+  Serial.println(bfs::DecodeLeb128(buf, sizeof(buf), &read_val));
+  Serial.print("Read value: ");
+  Serial.println(read_val);
 }
+
+void loop() {}
