@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 # Project information
 project(Leb128
-  VERSION 2.0.0
+  VERSION 2.0.1
   DESCRIPTION "Little endian base 128 variable-length encoding."
   LANGUAGES CXX
 )

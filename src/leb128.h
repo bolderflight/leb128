@@ -26,6 +26,9 @@
 #ifndef SRC_LEB128_H_
 #define SRC_LEB128_H_
 
+#if defined(ARDUINO)
+#include <Arduino.h>
+#endif
 #include <cstddef>
 #include <cstdint>
 
