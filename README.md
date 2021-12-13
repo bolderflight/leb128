@@ -3,7 +3,7 @@
 ![Bolder Flight Systems Logo](img/logo-words_75.png) &nbsp; &nbsp; ![Arduino Logo](img/arduino_logo_75.png)
 
 # Leb128
-Signed little endian base 128 (LEB128) implementation, which stores arbitrarily large signed integers in a variable length format. This library is compatible with Arduino ARM and with CMake build systems.
+Signed little endian base 128 (LEB128) implementation, which stores arbitrarily large signed integers in a variable length format. This library is compatible with Arduino ARM and with CMake build systems. It would also be easy to include with other projects, since it is a header only library consisting of a single file.
    * [License](LICENSE.md)
    * [Changelog](CHANGELOG.md)
    * [Contributing guide](CONTRIBUTING.md)

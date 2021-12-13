@@ -35,9 +35,58 @@
 namespace bfs {
 
 std::size_t EncodeLeb128(int64_t val, uint8_t * const data,
-                         const std::size_t len);
+                         const std::size_t len) {
+  if (!data) {return 0;}
+  bool negative = (val < 0);
+  std::size_t i = 0;
+  while (1) {
+    /* Prevent buffer overflow */
+    if (i < len) {
+      uint8_t b = val & 0x7F;
+      /* Ensure an arithmetic shift */
+      val >>= 7;
+      if (negative) {
+        val |= (~0ULL << 57);
+      }
+      if (((val == 0) && (!(b & 0x40))) ||
+          ((val == -1) && (b & 0x40))) {
+        data[i++] = b;
+        return i;
+      } else {
+        data[i++] = b | 0x80;
+      }
+    } else {
+      return 0;
+    }
+  }
+}
+
 std::size_t DecodeLeb128(uint8_t const * const data, const std::size_t len,
-                         int64_t * const val);
+                         int64_t * const val) {
+  /* Null pointer check */
+  if ((!data) || (!val)) {return 0;}
+  int64_t res = 0;
+  std::size_t shift = 0;
+  std::size_t i = 0;
+  while (1) {
+    if (i < len) {
+      uint8_t b = data[i++];
+      uint64_t slice = b & 0x7F;
+      res |= slice << shift;
+      shift += 7;
+      if (!(b & 0x80)) {
+        if ((shift < 64) && (b & 0x40)) {
+          *val = res | (-1ULL) << shift;
+          return i;
+        }
+        *val = res;
+        return i;
+      }
+    } else {
+      return 0;
+    }
+  }
+}
 
 }  // namespace bfs
 
