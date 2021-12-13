@@ -25,6 +25,7 @@
 
 #include "leb128.h"
 #include "gtest/gtest.h"
+#include <limits>
 
 /* Test minimum input */
 TEST(Leb128, MinInput) {
